@@ -1,0 +1,20 @@
+# Wire contract: `client_payload`
+
+Shared with [`sentry_loop_orchestrator`](https://github.com/mcrisologo/sentry_loop_orchestrator).
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| `issue_id` | yes | Sentry issue id (string or number) |
+| `issue_url` | yes | Permalink |
+| `title` | yes | Issue title / exception summary |
+| `culprit` | no | Sentry culprit |
+| `environment` | no | Used by bridge allowlist |
+| `count` | no | Event count |
+| `level` | no | e.g. `error` |
+| `stacktrace` | no | Truncated text (bridge default 8k) |
+
+- GitHub `event_type` default: `sentry_issue`
+- Schema: [`schemas/client_payload.schema.json`](./schemas/client_payload.schema.json)
+- Golden fixture: [`fixtures/client_payload.golden.json`](./fixtures/client_payload.golden.json)
+
+Keep both package schemas/fixtures in sync when the wire shape changes.

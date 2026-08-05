@@ -1,0 +1,10 @@
+.bundle/
+vendor/bundle/
+*.gem
+.DS_Store
+coverage/
+tmp/
+.env
+.env.*
+!.env.example
+Gemfile.lock

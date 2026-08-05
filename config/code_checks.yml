@@ -1,0 +1,23 @@
+# Copy to <project>/config/code_checks.yml and adjust (or let
+# link-agent-config.sh seed this file once on Gemfile projects).
+# Runner symlink: <project>/scripts/code_checks.sh → ai-agent-config.
+# Injecting RuboCop cops / custom audits: docs/code_checks.md
+#
+# cmd must be an argv list (preferred) or a shell-style string.
+# Optional top-level and per-check env.unset / env.set.
+
+# env:
+#   unset:
+#     - DATABASE_URL
+#   set:
+#     RAILS_ENV: development
+
+checks:
+  - name: RuboCop
+    cmd: [bin/rubocop, --parallel]
+  - name: bundler-audit
+    cmd: [bin/bundler-audit, check]
+  - name: Zeitwerk check
+    cmd: [bin/rails, zeitwerk:check]
+  # - name: Tenant FK audit
+  #   cmd: [bundle, exec, rails, runner, scripts/audit_cross_tenant_fks.rb]
