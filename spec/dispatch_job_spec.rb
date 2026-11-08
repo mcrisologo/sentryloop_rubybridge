@@ -44,6 +44,21 @@ RSpec.describe SentryGithubDispatch::DispatchJob do
     expect(claim_present?).to be(false)
   end
 
+  it 'does not log the GitHub response body' do
+    io = StringIO.new
+    allow(Rails).to receive(:logger).and_return(ActiveSupport::Logger.new(io))
+    allow(SentryGithubDispatch::DispatchGithub).to receive(:call)
+      .and_return(
+        SentryGithubDispatch::DispatchGithub::Result.new(
+          ok: false, status: 401, error: 'token=ghp_should_not_leak', retryable: false
+        )
+      )
+
+    described_class.perform_now(payload)
+    expect(io.string).to include('status=401')
+    expect(io.string).not_to include('ghp_should_not_leak')
+  end
+
   it 'keeps the claim and raises on retryable 500' do
     allow(SentryGithubDispatch::DispatchGithub).to receive(:call)
       .and_return(

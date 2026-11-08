@@ -9,7 +9,7 @@ module SentryGithubDispatch
       return unless defined?(::Rack::Attack)
 
       ::Rack::Attack.throttle('sentry_github_dispatch/ip', limit: limit, period: period) do |req|
-        req.ip if req.post? && req.path.match?(%r{/internal/webhooks/sentry/[^/]+/auto_fix\z})
+        req.ip if req.post? && req.path.match?(%r{/[^/]+/auto_fix\z})
       end
     end
   end

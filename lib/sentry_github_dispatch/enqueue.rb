@@ -8,6 +8,8 @@ module SentryGithubDispatch
       end
     end
 
+    MAX_RAW_BODY = 262_144 # 256 KiB
+
     def self.call(token:, header_secret:, signature:, raw_body:, params:, hook_timestamp: nil)
       new(
         token: token,
@@ -29,6 +31,10 @@ module SentryGithubDispatch
     end
 
     def call
+      if @raw_body.to_s.bytesize > MAX_RAW_BODY
+        return Result.new(ok: false, status: :payload_too_large, reason: 'too_large')
+      end
+
       # Always authenticate first (even when disabled) to avoid endpoint fingerprinting.
       verify = VerifyRequest.call(
         token: @token,
