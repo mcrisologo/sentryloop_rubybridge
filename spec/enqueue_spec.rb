@@ -70,4 +70,13 @@ RSpec.describe SentryGithubDispatch::Enqueue do
     expect(second.reason).to eq('idempotent')
     expect(enqueued_dispatch_jobs.size).to eq(1)
   end
+
+  it 'rejects an oversized body before HMAC work' do
+    huge = 'x' * (described_class::MAX_RAW_BODY + 1)
+    result = call(raw_body: huge, signature: '0' * 64)
+    expect(result).not_to be_success
+    expect(result.status).to eq(:payload_too_large)
+    expect(enqueued_dispatch_jobs).to be_empty
+  end
 end
+

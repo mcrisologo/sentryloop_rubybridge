@@ -74,6 +74,7 @@ module SentryGithubDispatch
 
     def connection
       Faraday.new do |f|
+        f.ssl.verify = true
         f.options.open_timeout = OPEN_TIMEOUT
         f.options.timeout = TIMEOUT
       end

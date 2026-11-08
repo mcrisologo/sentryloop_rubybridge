@@ -52,6 +52,14 @@ RSpec.describe SentryGithubDispatch::DispatchGithub do
     expect(result.ambiguous?).to be(true)
   end
 
+  it 'does not call GitHub when owner/repo are not a safe identity' do
+    configure_bridge(github_owner: 'owner/../other')
+    result = described_class.call(payload: payload)
+    expect(result.status).to eq(503)
+    expect(result.error).to eq('not configured')
+    expect(WebMock).not_to have_requested(:post, /api\.github\.com/)
+  end
+
   it 'truncates long stacktraces via Config.max_stack_chars' do
     configure_bridge(max_stack_chars: 20)
     stub = stub_request(:post, 'https://api.github.com/repos/owner/repo/dispatches')

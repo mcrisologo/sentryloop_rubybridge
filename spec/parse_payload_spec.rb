@@ -70,4 +70,26 @@ RSpec.describe SentryGithubDispatch::ParsePayload do
     expect(result).not_to be_success
     expect(result.error).to eq('invalid issue url')
   end
+
+  it 'rejects issue ids that cannot be a safe cache key' do
+    result = described_class.call(
+      issue_id: '../1',
+      issue_url: 'https://sentry.io/issues/1/',
+      title: 'Boom'
+    )
+    expect(result).not_to be_success
+    expect(result.error).to eq('invalid issue id')
+  end
+
+  it 'accepts a self-hosted Sentry host from configuration' do
+    configure_bridge
+    SentryGithubDispatch.configuration.allowed_hosts = ['sentry.example.com']
+    result = described_class.call(
+      issue_id: '1',
+      issue_url: 'https://sentry.example.com/issues/1/',
+      title: 'Boom'
+    )
+    expect(result).to be_success
+  end
 end
+
