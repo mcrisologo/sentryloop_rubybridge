@@ -46,6 +46,7 @@ module SentryGithubDispatch
       )
 
       return { error: 'missing issue id' } if issue_id.blank?
+      return { error: 'invalid issue id' } unless issue_id.to_s.match?(/\A[A-Za-z0-9._-]{1,64}\z/)
       return { error: 'missing issue url' } if issue_url.blank?
       return { error: 'missing title' } if title.blank?
       return { error: 'invalid issue url' } unless sentry_issue_url?(issue_url)
@@ -56,10 +57,7 @@ module SentryGithubDispatch
     def sentry_issue_url?(url)
       uri = URI.parse(url.to_s)
       host = uri.host.to_s.downcase
-      allowed = ENV.fetch('SENTRY_ALLOWED_HOSTS', 'sentry.io')
-                   .split(',')
-                   .map { |h| h.strip.downcase }
-                   .reject(&:blank?)
+      allowed = Array(Config.allowed_hosts).map { |h| h.to_s.strip.downcase }.reject(&:blank?)
       allowed = ['sentry.io'] if allowed.empty?
 
       uri.is_a?(URI::HTTPS) &&

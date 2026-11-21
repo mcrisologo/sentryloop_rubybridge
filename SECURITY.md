@@ -7,9 +7,11 @@
 | Sentry webhook forgery | Trigger GitHub dispatch | Path token + **HMAC by default** (`require_hmac=true`) over raw body; optional header secret |
 | Stale / clock-skewed deliveries | Accept ancient hooks | Soft freshness check on `Sentry-Hook-Timestamp` (default 300s). **Not** cryptographic replay defense — Sentry’s signature does not bind the timestamp |
 | Captured body+signature replay | Re-fire after claim TTL | Atomic cache claim per `issue_id`; keep claim across retryable GitHub failures; short TTL |
-| Misconfigured public install | Dispatch to wrong repo | No owner/repo defaults; kill switch default **off** |
-| Secret leakage | PAT in git | Never commit `.env`; store PAT in host secrets only |
+| Misconfigured public install | Dispatch to wrong repo | No owner/repo defaults; kill switch default **off**; owner/repo must be GitHub name charset (no `/` or `..`) |
+| Secret leakage | PAT in git or logs | Never commit `.env`; store PAT in host secrets only; job logs omit GitHub response bodies |
 | Duplicate spend | Concurrent webhooks / retries | Atomic cache claim (`unless_exist`); discard non-retryable 4xx after releasing claim |
+| Oversized webhook | Memory / HMAC DoS | Reject bodies over 256 KiB (`413`) before HMAC |
+| Issue URL SSRF | Dispatch payload points off Sentry | HTTPS + `/issues/` + allowlisted hosts (`sentry.io` by default) |
 
 ## Operator checklist
 

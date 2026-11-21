@@ -37,6 +37,7 @@ RSpec.configure do |config|
 
   config.before do
     ENV.keys.grep(/\ASENTRY_AUTO_FIX_/).each { |k| ENV.delete(k) }
+    ENV.delete('SENTRY_ALLOWED_HOSTS')
     SentryGithubDispatch.reset_configuration!
     Rails.cache.clear
     ActiveJob::Base.queue_adapter.enqueued_jobs.clear

@@ -3,6 +3,10 @@
 module SentryGithubDispatch
   class WebhooksController < ActionController::API
     def create
+      if request.content_length.to_i > Enqueue::MAX_RAW_BODY
+        return head :payload_too_large
+      end
+
       result = Enqueue.call(
         token: params[:token],
         header_secret: request.headers[Config.webhook_secret_header].to_s,

@@ -2,8 +2,8 @@
 
 Rails engine: **Sentry issue-alert webhook → authenticated GitHub `repository_dispatch`**.
 
-This repository is **`sentry_loop_bridge`** (standalone). Pair with the separate npm package
-[`sentry_loop_orchestrator`](https://github.com/mcrisologo/sentry_loop_orchestrator)
+This repository is **`sentryloop_rubybridge`** (standalone). Pair with the separate npm package
+[`sentryloop_orchestrator`](https://github.com/mcrisologo/sentryloop_orchestrator)
 (`@gohub/sentry-loop-orchestrator`) for the Cursor investigate → fix/skeptic → PR loop.
 
 ## Install
@@ -12,7 +12,7 @@ This repository is **`sentry_loop_bridge`** (standalone). Pair with the separate
 
 ```ruby
 # Gemfile
-gem 'sentry_github_dispatch', git: 'https://github.com/OWNER/sentry_loop_bridge.git'
+gem 'sentry_github_dispatch', git: 'https://github.com/mcrisologo/sentryloop_rubybridge.git'
 ```
 
 ### Local path (sibling checkout)
@@ -59,6 +59,7 @@ https://<host>/internal/webhooks/sentry/<WEBHOOK_TOKEN>/auto_fix
 | `SENTRY_AUTO_FIX_WEBHOOK_SECRET` | optional | Extra header secret; alone is weaker than HMAC |
 | `SENTRY_AUTO_FIX_HMAC_MAX_SKEW_SECONDS` | no | Default `300` — rejects stale `Sentry-Hook-Timestamp` |
 | `SENTRY_AUTO_FIX_ALLOWED_ENVIRONMENTS` | no | Default `production` |
+| `SENTRY_AUTO_FIX_ALLOWED_HOSTS` | no | Default `sentry.io`. Comma-separated hosts for issue URLs. `SENTRY_ALLOWED_HOSTS` is an alias |
 | `SENTRY_AUTO_FIX_WEBHOOK_SECRET_HEADER` | no | Default `X-Sentry-Loop-Webhook-Secret` |
 
 ```ruby
@@ -74,7 +75,7 @@ SentryGithubDispatch::RackAttack.throttle!(limit: 10, period: 60)
 
 The orchestrator README documents **Option A (this gem)**, **Option B (Worker/Zapier)**, and
 **Option C (manual `workflow_dispatch`)** with pros/cons:
-[`sentry_loop_orchestrator` README — Bridge options](https://github.com/mcrisologo/sentry_loop_orchestrator#bridge-options-sentry--github).
+[`sentryloop_orchestrator` README — Bridge options](https://github.com/mcrisologo/sentryloop_orchestrator#bridge-options-sentry--github).
 
 ## Security
 

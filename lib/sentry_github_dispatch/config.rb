@@ -37,6 +37,10 @@ module SentryGithubDispatch
       SentryGithubDispatch.configuration.allowed_environments
     end
 
+    def allowed_hosts
+      SentryGithubDispatch.configuration.allowed_hosts
+    end
+
     def idempotency_ttl
       SentryGithubDispatch.configuration.idempotency_ttl
     end

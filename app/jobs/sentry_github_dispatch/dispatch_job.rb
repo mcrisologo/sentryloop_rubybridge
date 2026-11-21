@@ -11,7 +11,7 @@ module SentryGithubDispatch
 
       Rails.logger.error(
         "[sentry_github_dispatch] GitHub dispatch failed issue=#{payload[:issue_id]} " \
-        "status=#{result.status} retryable=#{result.retryable?} error=#{result.error}"
+        "status=#{result.status} retryable=#{result.retryable?}"
       )
 
       # The POST may have reached GitHub before the timeout. Keep the claim and
