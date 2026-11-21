@@ -13,19 +13,19 @@ Gem::Specification.new do |spec|
     Rails engine that receives authenticated Sentry issue-alert webhooks and enqueues
     a GitHub repository_dispatch (e.g. for Cursor-based auto-fix workflows).
   DESC
-  spec.homepage = 'https://github.com/mcrisologo/sentry_loop_bridge'
+  spec.homepage = 'https://github.com/mcrisologo/sentryloop_rubybridge'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.2'
+  spec.required_ruby_version = '>= 3.3'
 
   spec.files = Dir.chdir(__dir__) do
     Dir['{app,config,lib}/**/*', 'LICENSE', 'README.md', 'SECURITY.md', 'ARCHITECTURE.md', 'CONTRACT.md'].select { |f| File.file?(f) }
   end
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'faraday', '>= 2.0'
+  spec.add_dependency 'faraday', '>= 2.15'
   spec.add_dependency 'rails', '>= 7.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/mcrisologo/sentry_loop_bridge'
+  spec.metadata['source_code_uri'] = spec.homepage
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
