@@ -14,7 +14,7 @@ jobs:
       matrix:
         ruby: ["3.3", "3.4", "4.0"]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "4.0"
