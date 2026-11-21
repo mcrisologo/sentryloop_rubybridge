@@ -1,6 +1,6 @@
 # Wire contract: `client_payload`
 
-Shared with [`sentry_loop_orchestrator`](https://github.com/mcrisologo/sentry_loop_orchestrator).
+Shared with [`sentryloop_orchestrator`](https://github.com/mcrisologo/sentryloop_orchestrator).
 
 | Field | Required | Notes |
 |-------|----------|-------|

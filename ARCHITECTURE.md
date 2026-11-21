@@ -1,14 +1,14 @@
-# Architecture — sentry_loop_bridge
+# Architecture — sentryloop_rubybridge
 
 **Public names**
 
 | Layer | Name |
 |-------|------|
-| GitHub repo | `sentry_loop_bridge` |
+| GitHub repo | `sentryloop_rubybridge` |
 | Ruby gem | `sentry_github_dispatch` |
 | Env prefix | `SENTRY_AUTO_FIX_*` |
 
-Companion: [`sentry_loop_orchestrator`](https://github.com/mcrisologo/sentry_loop_orchestrator).
+Companion: [`sentryloop_orchestrator`](https://github.com/mcrisologo/sentryloop_orchestrator).
 
 ## Runtime sequence
 
