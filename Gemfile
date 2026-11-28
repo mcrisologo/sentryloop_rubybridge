@@ -7,5 +7,5 @@ gemspec
 group :test do
   gem 'bundler-audit', '~> 0.9'
   gem 'rspec', '~> 3.13'
-  gem 'webmock', '~> 3.23'
+  gem 'webmock', '~> 3.41'
 end
